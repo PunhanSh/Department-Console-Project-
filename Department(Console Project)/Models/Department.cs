@@ -6,6 +6,8 @@ namespace Department_Console_Project_.Models
 {
     class Department
     {
+        #region Name (Departamentin adi)
+        //Min iki herfden ibaret olmalidir
         private string _name;
         public string Name 
         { 
@@ -25,6 +27,9 @@ namespace Department_Console_Project_.Models
                 }
             } 
         }
+        #endregion
+
+        #region NameCheck(Min 2 herf methodu)
         private bool NameCheck(string Name)
         {
             if (Name.Length < 2)
@@ -40,8 +45,10 @@ namespace Department_Console_Project_.Models
             }
             return true;
         }
+        #endregion
 
-
+        #region WorkerLimit (Departmentdeki maximum isci sayi)
+        //min 1 neffer ola biler
         private int _workerlimit;
         public int WorkerLimit 
         { 
@@ -61,6 +68,10 @@ namespace Department_Console_Project_.Models
                 }
             }
         }
+        #endregion
+
+        #region SalaryLimit (Departmentdeki butun iscilere ayliq verilen max maas)
+        //min 250 ola biler
         private double _salarylimit;
         public double SalaryLimit 
         { 
@@ -80,6 +91,10 @@ namespace Department_Console_Project_.Models
                 }
             }
         }
+        #endregion
+
+        #region Employees (Departamentdeki isci siyahisi)
+        //departamente elave olunmus isci siyahisi
         private List<Employee> _employees { get; set; }
         public List<Employee> Employees
         {
@@ -88,11 +103,14 @@ namespace Department_Console_Project_.Models
                 return _employees;
             }
         }
-
-        public Department()
+        #endregion        
+        public Department() //Constructor 
         {
             _employees = new List<Employee>();
         }
+
+        #region CalcSalaryAverage()
+        //departmentdeki iscilerin ortalama maasini qaytaran method
         public double CalcSalaryAverage()
         {
             double sum = 0;
@@ -112,7 +130,8 @@ namespace Department_Console_Project_.Models
             else
             {
                 return 0;
-            }            
+            }                       
         }
+        #endregion 
     }
 }

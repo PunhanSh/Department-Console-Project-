@@ -9,6 +9,7 @@ namespace Department_Console_Project_.Services
 {
     class HumanResourceManager : IHumanResourceManager
     {
+        #region Isci        
         private List<Employee> _employee;
         public List<Employee> Employee
         {
@@ -17,6 +18,9 @@ namespace Department_Console_Project_.Services
                 return _employee;
             }
         }
+        #endregion
+
+        #region Department
         private List<Department> _departments;
         public List<Department> Departments
         {
@@ -25,29 +29,45 @@ namespace Department_Console_Project_.Services
                 return _departments;
             }
         }
+        #endregion
+
+        #region Constructor
         public HumanResourceManager()
         {
             _departments = new List<Department>();
             _employee = new List<Employee>();
         }
+        #endregion
 
+        #region Departamentin elave edilmesi methodu
         public void AddDepartment(Department department)
         {
             _departments.Add(department);
         }
+        #endregion
 
+        #region Iscinin elave edilmesi methodu
         public void AddEmployee(Employee employee, string DepartmentName)
         {
             Employee newemployee = new Employee();
+            newemployee.No = employee.No;
             newemployee.Fullname = employee.Fullname;
             newemployee.Salary = employee.Salary;
             newemployee.Position = employee.Position;
 
             foreach (Department item in Departments)
             {
-                if (item.Name.ToUpper() == DepartmentName.ToUpper())
+                if (item.Name.ToUpper() == DepartmentName.ToUpper()) //Adin duzgun yoxlanilmasi ucun ikisi de upper olunmalidir
                 {
-                    item.Employees.Add(newemployee);
+                    if (item.WorkerLimit > item.Employees.Count)
+                    {
+                           item.Employees.Add(newemployee);
+                        Console.WriteLine("Isci sirkete daxil edildi");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"{item.Name} adli departmentde isci doludur");
+                    }                   
                 }
                 else
                 {
@@ -55,27 +75,69 @@ namespace Department_Console_Project_.Services
                 }
             }
         }
+        #endregion
 
-        public List<Department> EditDepartments(string name, string newname)
+        #region Department uzerinde deyisiklikler methodu
+
+        public void EditDepartments(string name, Department department)
         {
-            return _departments.FindAll(d => d.Name == name);
+            foreach (Department editdepartment in _departments)
+            {
+                if (editdepartment.Name.ToUpper() == name.ToUpper()) //gelen ad duzgun yoxlanilmasi ucun upper olunmalidir
+                {
+                    editdepartment.Name = department.Name;
+                }
+                else
+                {
+                    Console.WriteLine("Axtardiginiz adda department yoxdur");
+                }
+            }
         }
+        #endregion
 
-        public List<Employee> EditEmployee(string no, string fullName, double salary, string position)
+        #region Isci uzerinde deyisiklikler methodu
+        public void EditEmployee(string no, string fullName, int salary, string position, Employee employee) 
         {
-            return _employee.FindAll(w => w.No.ToUpper() == no.ToUpper() && w.Fullname.ToUpper() == fullName.ToUpper() && w.Position.ToUpper() == position.ToUpper() && w.Salary == salary).ToList();
-        }
+            Employee editedemployee = new Employee();
+            foreach (Department item in _departments)
+            {
+                for (int i = 0; i < item.Employees.Count; i++)
+                {
+                    if (item.Employees[i].No == no)  //iscinin nomresine gore edit olunur
+                    {
 
-        public List<Department> GetDepartments()
+                        Console.WriteLine($"Iscinin adi ve soyadi: {item.Employees[i].Fullname}\nIscinin maasi: {item.Employees[i].Salary}\nIscinin vezifesi: {item.Employees[i].Position}");
+
+                        editedemployee.Fullname = employee.Fullname;
+                        editedemployee.Salary = employee.Salary;
+                        editedemployee.Position = employee.Position;
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("Daxil etdiyiniz adda isci yoxdur");
+                        return;
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region Sistemdeki departmentleri geriye qaytarmaq methodu
+        public List<Department> GetDepartments() 
         {
             return Departments;
         }
+        #endregion
 
+        #region Iscini siyahidan silmek methodu
         public void RemoveEmployee(string no, string departmentName)
         {
+            //iscinin nomresine gore silinmesi
             List<Employee> EmployeeList = _employee.ToList();
             Employee removeemployee = _employee.Find(w => w.No.ToUpper() == no.ToUpper() && w.DepartmentName.ToUpper() == w.DepartmentName.ToUpper());
             _employee.Remove(removeemployee);
         }
+        #endregion   
     }
 }
