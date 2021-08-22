@@ -74,17 +74,33 @@ namespace Department_Console_Project_.Models
                 {
                     _salarylimit = value;
                 }
+                else
+                {
+                    Console.WriteLine("Iscilerin butun maasi minimum 250 ola biler");
+                }
             }
         }
-        public List<Employee> Employees { get; set; }
+        private List<Employee> _employees { get; set; }
+        public List<Employee> Employees
+        {
+            get
+            {
+                return _employees;
+            }
+        }
+
+        public Department()
+        {
+            _employees = new List<Employee>();
+        }
         public double CalcSalaryAverage()
         {
             double sum = 0;
             double average = 0;
 
-            foreach (var item in Employees)
+            foreach (var employee in Employees)
             {
-                sum += item.Salary;
+                sum += employee.Salary;
             }
             
             if (Employees.Count != 0)

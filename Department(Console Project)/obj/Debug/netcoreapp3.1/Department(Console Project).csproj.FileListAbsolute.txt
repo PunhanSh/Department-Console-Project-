@@ -11,3 +11,16 @@ C:\Users\punha\source\repos\Department(Console Project)\Department(Console Proje
 C:\Users\punha\source\repos\Department(Console Project)\Department(Console Project)\obj\Debug\netcoreapp3.1\Department(Console Project).dll
 C:\Users\punha\source\repos\Department(Console Project)\Department(Console Project)\obj\Debug\netcoreapp3.1\Department(Console Project).pdb
 C:\Users\punha\source\repos\Department(Console Project)\Department(Console Project)\obj\Debug\netcoreapp3.1\Department(Console Project).genruntimeconfig.cache
+C:\Users\punha\Desktop\Department(Console Project)\Department(Console Project)\bin\Debug\netcoreapp3.1\Department(Console Project).exe
+C:\Users\punha\Desktop\Department(Console Project)\Department(Console Project)\bin\Debug\netcoreapp3.1\Department(Console Project).deps.json
+C:\Users\punha\Desktop\Department(Console Project)\Department(Console Project)\bin\Debug\netcoreapp3.1\Department(Console Project).runtimeconfig.json
+C:\Users\punha\Desktop\Department(Console Project)\Department(Console Project)\bin\Debug\netcoreapp3.1\Department(Console Project).runtimeconfig.dev.json
+C:\Users\punha\Desktop\Department(Console Project)\Department(Console Project)\bin\Debug\netcoreapp3.1\Department(Console Project).dll
+C:\Users\punha\Desktop\Department(Console Project)\Department(Console Project)\bin\Debug\netcoreapp3.1\Department(Console Project).pdb
+C:\Users\punha\Desktop\Department(Console Project)\Department(Console Project)\obj\Debug\netcoreapp3.1\Department(Console Project).csproj.AssemblyReference.cache
+C:\Users\punha\Desktop\Department(Console Project)\Department(Console Project)\obj\Debug\netcoreapp3.1\Department(Console Project).AssemblyInfoInputs.cache
+C:\Users\punha\Desktop\Department(Console Project)\Department(Console Project)\obj\Debug\netcoreapp3.1\Department(Console Project).AssemblyInfo.cs
+C:\Users\punha\Desktop\Department(Console Project)\Department(Console Project)\obj\Debug\netcoreapp3.1\Department(Console Project).csproj.CoreCompileInputs.cache
+C:\Users\punha\Desktop\Department(Console Project)\Department(Console Project)\obj\Debug\netcoreapp3.1\Department(Console Project).dll
+C:\Users\punha\Desktop\Department(Console Project)\Department(Console Project)\obj\Debug\netcoreapp3.1\Department(Console Project).pdb
+C:\Users\punha\Desktop\Department(Console Project)\Department(Console Project)\obj\Debug\netcoreapp3.1\Department(Console Project).genruntimeconfig.cache

@@ -10,10 +10,9 @@ namespace Department_Console_Project_.Interfaces
         public List<Department> Departments { get;}
         public void AddDepartment(Department department);
         public List<Department> GetDepartments();        
-        public void EditDepartments(string _name, string newname);
+        public List<Department> EditDepartments(string _name, string newname);
         public void AddEmployee(Employee employee, string DepartmentName);
-        public void RemoveEmployee(int number,string DepartmentName);
-        public void EditEmployee(int number, string fullName, double salary, string position);
-
+        public void RemoveEmployee(string no,string departmentName);
+        public List<Employee> EditEmployee(string no, string fullName, double salary, string position);
     }
 }

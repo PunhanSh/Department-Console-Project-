@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\punha\\source\\repos\\Department(Console Project)\\Department(Console Project)\\Department(Console Project).csproj": {}
+    "C:\\Users\\punha\\Desktop\\Department(Console Project)\\Department(Console Project)\\Department(Console Project).csproj": {}
   },
   "projects": {
-    "C:\\Users\\punha\\source\\repos\\Department(Console Project)\\Department(Console Project)\\Department(Console Project).csproj": {
+    "C:\\Users\\punha\\Desktop\\Department(Console Project)\\Department(Console Project)\\Department(Console Project).csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\punha\\source\\repos\\Department(Console Project)\\Department(Console Project)\\Department(Console Project).csproj",
+        "projectUniqueName": "C:\\Users\\punha\\Desktop\\Department(Console Project)\\Department(Console Project)\\Department(Console Project).csproj",
         "projectName": "Department(Console Project)",
-        "projectPath": "C:\\Users\\punha\\source\\repos\\Department(Console Project)\\Department(Console Project)\\Department(Console Project).csproj",
+        "projectPath": "C:\\Users\\punha\\Desktop\\Department(Console Project)\\Department(Console Project)\\Department(Console Project).csproj",
         "packagesPath": "C:\\Users\\punha\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\punha\\source\\repos\\Department(Console Project)\\Department(Console Project)\\obj\\",
+        "outputPath": "C:\\Users\\punha\\Desktop\\Department(Console Project)\\Department(Console Project)\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\punha\\AppData\\Roaming\\NuGet\\NuGet.Config",
