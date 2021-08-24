@@ -38,7 +38,7 @@ namespace Department_Console_Project_
                     choose1 = Console.ReadLine();
                     int.TryParse(choose1, out choose2);
                 }
-                switch (choose2)
+                switch (choose2)//Cox ve konkret secim olduguna gore switchden istifade olunur
                 {
                     case 1:
                         ShowDepartmenstList(humanResourceManager);
@@ -76,7 +76,7 @@ namespace Department_Console_Project_
         #region Departmentin siyahisini gostermek methodu
         static void ShowDepartmenstList(HumanResourceManager humanResourceManager)
         {
-            foreach (Department item in humanResourceManager.Departments)
+            foreach (Department item in humanResourceManager.Departments) //Dongu vasitesile departmentsdeki departmentleri yazdiri
             {
               Console.WriteLine($"Departamentin Adi: {item.Name}\nDepartamentdeki iscinin sayi: {item.Employees.Count}\nDepartamentin ortalama maasi: {item.CalcSalaryAverage()}\n~~~~~~~~~~");                
             }        
@@ -92,13 +92,13 @@ namespace Department_Console_Project_
             while (!check)
             {
                 Console.WriteLine("Departmentin adini daxil edin...");
-                string DepartName = Console.ReadLine();
-                    while (!(DepartName.Length >= 2))
-                    {
+                string Departmentname = Console.ReadLine();
+                while (!(Departmentname.Length >= 2))  //taskda verilen sertlere gore departamentin xususiyyetleri gonderilmelidi
+                {
                     Console.WriteLine("Department adinda en azi iki herf olmalidir");
-                    DepartName = Console.ReadLine();
-                    }
-                 Console.WriteLine("Departmentin isci limitini daxil edin...");
+                    Departmentname = Console.ReadLine();
+                }
+                    Console.WriteLine("Departmentin isci limitini daxil edin...");
                 string limit1 = Console.ReadLine();
                 int workerlimit;
 
@@ -113,19 +113,20 @@ namespace Department_Console_Project_
                 string limit2 = Console.ReadLine();
                 int salarylimit;
 
-                while (!int.TryParse(limit2, out salarylimit) || salarylimit < 250) 
+                while (!int.TryParse(limit2, out salarylimit) || salarylimit < 250 || workerlimit * 250 > salarylimit) 
                 {
                     Console.WriteLine("Departamentin maas limiti deyerini duzgun daxil edin(MAAS LIMITI 250-DEN ASAGI OLA BILMEZ)");
                     limit2 = Console.ReadLine();
                     int.TryParse(limit2, out salarylimit);
-                }
-                department.Name = DepartName;
+                }                
+                department.Name = Departmentname;
                 department.WorkerLimit = workerlimit;
                 department.SalaryLimit = salarylimit;
 
                 humanResourceManager.AddDepartment(department);
                 Console.WriteLine("Departament elave edildi.\n~~~~~~~~~~");
-                Console.WriteLine($"Departament Adi: {DepartName}\n~~~~~~~~~~\nDepartament Isci Limiti: {workerlimit}\n~~~~~~~~~~\nDepartament Maas Limiti: {salarylimit}\n~~~~~~~~~~\n");
+                Console.WriteLine($"Departament Adi: {Departmentname}\n~~~~~~~~~~\nDepartament Isci Limiti: {workerlimit}\n~~~~~~~~~~\nDepartament Maas Limiti: {salarylimit}\n~~~~~~~~~~");
+                
                 check = true;
             }
         }
@@ -136,12 +137,12 @@ namespace Department_Console_Project_
         static void EditDepartment(HumanResourceManager humanResourceManager)
         {
             Console.WriteLine("Uzerinde deyisiklik etmek istediyiniz department adini daxil edin...");
-            string name = Console.ReadLine();            
+            string name = Console.ReadLine();
 
-            Department department = humanResourceManager.Departments.Find(w => w.Name.ToUpper() == name.ToUpper());
+            Department department = humanResourceManager.Departments.Find(w => w.Name.ToUpper() == name.ToUpper()); //Hazir find methodu ile departamenti tapib sonra taksdaki sertlere gore departamentin xususiyyetlerini daxil edirik
             if (department == null)
             {
-                Console.WriteLine("Daxil etdiyiniz adda department yoxdur...");
+                Console.WriteLine("Daxil etdiyiniz adda department yoxdur.\n~~~~~~~~~~");
                 Menu(humanResourceManager);
             }
 
@@ -169,9 +170,9 @@ namespace Department_Console_Project_
             string newsalarylimit = Console.ReadLine();
             int newsalarylimit1;
 
-            while (!int.TryParse(newsalarylimit, out newsalarylimit1) || newsalarylimit1 < 250)
+            while (!int.TryParse(newsalarylimit, out newsalarylimit1) || newsalarylimit1 < 250 || newworkerlimit1 * 250 > newsalarylimit1)
             {
-                Console.WriteLine("Duzgun maas limiti deyeri daxil edin:");
+                Console.WriteLine("Duzgun maas limiti deyeri daxil edin bir iscinin maasi 250-den asagi ola bilmez");
                 newsalarylimit = Console.ReadLine();
                 int.TryParse(newsalarylimit, out newsalarylimit1);
             }
@@ -188,18 +189,19 @@ namespace Department_Console_Project_
                 Console.WriteLine("Department parametrleri deyisdirildi.\n~~~~~~~~~~");
             }
             Console.WriteLine($"Departament Adi: { newname}\n~~~~~~~~~~\nDepartament Isci Limiti: { newworkerlimit1}\n~~~~~~~~~~\nDepartament Maas Limiti: { newsalarylimit1}\n~~~~~~~~~~\n");
+
         }
         #endregion
 
         #region Iscinin siyahisini gostermek methodu
         static void ShowEmployeesList(HumanResourceManager humanResourceManager)
         {
-            for (int i = 0; i < humanResourceManager.Departments.Count; i++)
+            for (int i = 0; i < humanResourceManager.Departments.Count; i++)//Dongu vasitesile birinci departamentleri sonra da iscileri tapirig
             {
-                Department employeesindepartment = humanResourceManager.Departments[i];
-                for (int j = 0; j < employeesindepartment.Employees.Count; j++)
+                Department department = humanResourceManager.Departments[i];
+                for (int j = 0; j < department.Employees.Count; j++)
                 {
-                    Console.WriteLine($"Isci nomresi: {employeesindepartment.Employees[j].No}\nIscinin adi ve soyadi: {employeesindepartment.Employees[j].Fullname}\nIscinin vezifesi: {employeesindepartment.Employees[j].Position}\nIscinin maasi: {employeesindepartment.Employees[j].Salary}");
+                    Console.WriteLine($"Departmentin adi: {department.Name}\n~~~~~~~~~~\nIscinin nomresi: {department.Employees[j].No}\n~~~~~~~~~~\nIscinin Ad Soyadi: {department.Employees[j].Fullname}\n~~~~~~~~~~\nIscinin maasi: {department.Employees[j].Salary}\n~~~~~~~~~~\n");
                 }
             }
         }
@@ -212,11 +214,11 @@ namespace Department_Console_Project_
             Console.WriteLine("Departmentin adini daxil edin");
             string departmentname = Console.ReadLine();
 
-            Department departmentslist = humanResourceManager.Departments.Find(q => q.Name.ToUpper() == departmentname.ToUpper());
+            Department departmentslist = humanResourceManager.Departments.Find(q => q.Name.ToUpper() == departmentname.ToUpper());//Once find metodu ile departamenti tapirig sonra ise dongu vasitesile iscileri consola gonderirik
 
             if (departmentslist == null)
             {
-                Console.WriteLine("Daxil etdiyiniz adda department adi yoxdur");
+                Console.WriteLine("Daxil etdiyiniz adda department adi yoxdur\n~~~~~~~~~~");
             }
             else
             {
@@ -224,12 +226,12 @@ namespace Department_Console_Project_
                 {
                     for (int i = 0; i < departmentslist.Employees.Count; i++)
                     {
-                        Console.WriteLine($"Isci nomresi: {departmentslist.Employees[i].No}\nIscinin adi ve soyadi: {departmentslist.Employees[i].Fullname}\nIscinin vezifesi: {departmentslist.Employees[i].Position}\nIscinin maasi: {departmentslist.Employees[i].Salary}");
+                        Console.WriteLine($"Isci nomresi: {departmentslist.Employees[i].No}\nIscinin adi ve soyadi: {departmentslist.Employees[i].Fullname}\nIscinin vezifesi: {departmentslist.Employees[i].Position}\nIscinin maasi: {departmentslist.Employees[i].Salary}\n~~~~~~~~~~");
                     }
                 }
                 else
                 {
-                    Console.WriteLine($"{departmentname} departamentinde isci yoxdur");
+                    Console.WriteLine($"{departmentname} departamentinde isci yoxdur\n~~~~~~~~~~");
                 }
             }
         }
@@ -238,14 +240,49 @@ namespace Department_Console_Project_
         #region Isci elave etmek methodu
         static void AddEmployee(HumanResourceManager humanResourceManager)
         {
+
+            Console.WriteLine("Iscinin department adini daxil edin");
+            string DepartmentName = Console.ReadLine();
+
+            Department department = humanResourceManager.Departments.Find(w => w.Name.ToUpper() == DepartmentName.ToUpper());
+            if (department == null)
+            {
+                Console.WriteLine("Daxil etdiyiniz adda department yoxdur...");
+                Menu(humanResourceManager);
+            }
+
             Console.WriteLine("Iscinin nomresini daxil edin");
             string no = Console.ReadLine();
-                       
+
+            while (no.Length < 6)
+            {
+                Console.WriteLine("Isci nomresi 6 chardan ibaret olmalidir ");
+                no = Console.ReadLine();
+            }
+
+            while (no.Substring(0, 1).ToUpper() != DepartmentName.Substring(0, 1).ToUpper() || no.Substring(0, 2).ToUpper() != DepartmentName.Substring(0, 2).ToUpper() || no.Length < 6) 
+            {
+                Console.WriteLine("Iscinin nomresinin ilk iki herefi departamentin ilk iki herfi ile beraber olmalidir");
+                no = Console.ReadLine();
+            }
+            
             Console.WriteLine("Iscinin adi ve soyadini daxil edin");
             string fullname = Console.ReadLine();
 
+            while (fullname.Length < 1)
+            {
+                Console.WriteLine("Iscinin adi bosh ola bilmez");
+                fullname = Console.ReadLine();
+            }
+
             Console.WriteLine("Iscinin vezifesini daxil edin");
             string position = Console.ReadLine();
+
+            while (position.Length < 2)
+            {
+                Console.WriteLine("Isci vezifesi minimum 2 herfden ibaret olmalidir");
+                position = Console.ReadLine();
+            }
 
             Console.WriteLine("Iscinin maasini daxil edin");
             string salary = Console.ReadLine();
@@ -255,18 +292,8 @@ namespace Department_Console_Project_
                 Console.WriteLine("Maasi duzgun daxil edin");
                 salary = Console.ReadLine();
                 int.TryParse(salary, out newsalary);
-            }
-
-            Console.WriteLine("Iscinin department adini daxil edin");
-            string DepartmentName = Console.ReadLine();
-            
-
-            Department department = humanResourceManager.Departments.Find(w => w.Name.ToUpper() == DepartmentName.ToUpper());
-            if (department == null)
-            {
-                Console.WriteLine("Daxil etdiyiniz adda department yoxdur...");
-                Menu(humanResourceManager);
-            }
+            }       
+                     
             Employee newemployee = new Employee();
             newemployee.No = no;
             newemployee.Fullname = fullname;
@@ -274,7 +301,6 @@ namespace Department_Console_Project_
             newemployee.Position = position;
 
             humanResourceManager.AddEmployee(newemployee, DepartmentName);
-            Console.WriteLine("Isci elave edildi");
         }
         #endregion
 
@@ -283,91 +309,92 @@ namespace Department_Console_Project_
         {
             Console.WriteLine("Iscinin nomresini daxil edin");
             string employeeno = Console.ReadLine();
-            bool check = false;
-            string ename = " ";
-            int esalary = 0;
-            string eposition = " ";
 
-            int x = 0;
-            int y = 0;
-            for (int i = 0; i < humanResourceManager.Departments.Count; i++)
+            Employee editemployee = humanResourceManager.Employee.Find(d => d.No == employeeno);//isci nomresine gore axtaririg sonradan isci parametrlerini daxil edirik
+            if (editemployee == null)
             {
-                for (int j = 0; j < humanResourceManager.Departments[i].Employees.Count; j++)
-                {
-                    if (employeeno == humanResourceManager.Departments[i].Employees[j].No)
-                    {
-                        check = true;
-                        if (check)
-                        {
-                            ename = humanResourceManager.Departments[i].Employees[j].Fullname;
-                            esalary = humanResourceManager.Departments[i].Employees[j].Salary;
-                            eposition = humanResourceManager.Departments[i].Employees[j].Position;
-
-                            x = i;
-                            y = j;
-                        }
-                        else
-                        {
-                            Menu(humanResourceManager);
-                        }
-                    }
-                }
+                Console.WriteLine("Daxil etdiyiniz nomreli isci yoxdur.\n~~~~~~~~~~");
+                Menu(humanResourceManager);
+            }            
+            Console.WriteLine($"Iscinin adi ve soyadi: {editemployee.Fullname}\n~~~~~~~~~~Iscinin maasi: {editemployee.Salary}\n~~~~~~~~~~Iscinin vezifesi: {editemployee.Position}\n~~~~~~~~~~");
+            Console.WriteLine("Maasi daxil edin");
+            string salary1 = Console.ReadLine();
+            int salary2;
+            while (!int.TryParse(salary1, out salary2) || salary2 < 250)
+            {
+                Console.WriteLine("Maasi duzgun daxil edin");
+                salary1 = Console.ReadLine();
+                int.TryParse(salary1, out salary2);
             }
-            if (check)
+            Console.WriteLine("Vezifeni daxil edin");
+            string position1 = Console.ReadLine();
+                
+            while (position1.Length < 2)
             {
-                Console.WriteLine($"Iscinin adi ve soyadi: {ename}\nIscinin maasi:{esalary}\nIscinin vezifesi: {eposition} ");
-                Console.WriteLine("Maasi daxil edin");
-                string salary1 = Console.ReadLine();
-                int salary2;
-                while (!int.TryParse(salary1, out salary2))
-                {
-                    Console.WriteLine("Maasi DUZGUN daxil edin");
-                    salary1 = Console.ReadLine();
-                    int.TryParse(salary1, out salary2);
-                }
-                Console.WriteLine("Vezifeni daxil edin");
-                string position1 = Console.ReadLine();
+                Console.WriteLine("Isci vezifesi minimum 2 herfden ibaret olmalidir");
+                position1 = Console.ReadLine();
+            }
 
-                humanResourceManager.Departments[x].Employees[y].Salary = salary2;
-                humanResourceManager.Departments[x].Employees[y].Position = position1;
+            if (editemployee.Salary == salary2 && editemployee.Position == position1)
+            {
+                Console.WriteLine("Hec bir deyisiklik edilmedi.\n~~~~~~~~~~");
             }
             else
             {
-                Menu(humanResourceManager);
+                editemployee.Salary = salary2;
+                editemployee.Position = position1;
+
+                Console.WriteLine("Isci parametrleri deyisdirildi.\n~~~~~~~~~~");
             }
+            Console.WriteLine($"Isci Adi: {editemployee.Fullname}\n~~~~~~~~~~\nIsci maasi: {editemployee.Salary}\n~~~~~~~~~~\nIsci vezifesi: {editemployee.Position}\n~~~~~~~~~~\n");
+        
         }
         #endregion
 
         #region Isci silmek methodu
         static void RemoveEmployee(HumanResourceManager humanResourceManager)
         {
-            Console.WriteLine("Silmek istediyiniz iscinin departmentini daxil edin");
-            string dname = Console.ReadLine();
+            Console.WriteLine("Iscinin oldugu departamentini daxil edin");
+            string departmentname = Console.ReadLine();
 
-            Department department = humanResourceManager.Departments.Find(p => p.Name == dname);
+            Department department = humanResourceManager.Departments.Find(w => w.Name == departmentname);//iscinin departmenti axtarilir
 
-            Console.WriteLine("Silmek istediyiniz iscinin nomresini daxil edin");
-            string eno = Console.ReadLine();
+            Console.WriteLine("Iscinin nomresini daxil edin");
+            string employeenoo = Console.ReadLine();
+            while (employeenoo.Length < 6)
+            {
+                Console.WriteLine("Isci nomresi 6 chardan ibaret olmalidir ");
+                employeenoo = Console.ReadLine();
+            }
+
+            while (employeenoo.Substring(0, 1).ToUpper() != departmentname.Substring(0, 1).ToUpper() || departmentname.Substring(0, 2).ToUpper() != departmentname.Substring(0, 2).ToUpper() || employeenoo.Length < 6)
+            {
+                Console.WriteLine("Iscinin nomresinin ilk iki herefi departamentin ilk iki herfi ile beraber olmalidir");
+                employeenoo = Console.ReadLine();
+            }
+
             if (department != null)
             {
                 for (int i = 0; i < department.Employees.Count; i++)
                 {
-                    if (department.Employees[i].No == eno)
+                    if (department.Employees[i].No == employeenoo)
                     {
-                        department.Employees.Remove(department.Employees[i]);
-                        Console.WriteLine("Isci departmenden silindi");
-                        return;
+                        department.Employees.Remove(department.Employees[i]);//Hazir metoddan istifade edilir
+                        Console.WriteLine("Isci departmenden silindi\n~~~~~~~~~~");
+                        Menu(humanResourceManager);
                     }
                     else
                     {
-                        Console.WriteLine("Daxil etdiyiniz nomreli isci yoxdur");
+                        Console.WriteLine("Daxil etdiyiniz nomreli isci yoxdur\n~~~~~~~~~~");
+                        Menu(humanResourceManager);
                     }
 
                 }
             }
             else
             {
-                Console.WriteLine("Daxil etdiyiniz departament tapilmadi");
+                Console.WriteLine("Daxil etdiyiniz departament tapilmadi\n~~~~~~~~~~");
+                Menu(humanResourceManager);
             }
         }
         #endregion

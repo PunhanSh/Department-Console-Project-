@@ -66,7 +66,7 @@ namespace Department_Console_Project_.Services
                 if (item.WorkerLimit > item.Employees.Count)
                 {
                     item.Employees.Add(newemployee);
-                    Console.WriteLine("Isci sirkete daxil edildi");
+                    Console.WriteLine("Isci departamente daxil edildi");
                 }
                 else
                 {

@@ -36,13 +36,6 @@ namespace Department_Console_Project_.Models
             {
                 return false;
             }
-            foreach (char item in Name)
-            {
-                if (!Char.IsLetter(item))
-                {
-                    return false;
-                }
-            }
             return true;
         }
         #endregion
