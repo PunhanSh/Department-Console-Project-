@@ -54,24 +54,23 @@ namespace Department_Console_Project_.Services
             newemployee.Fullname = employee.Fullname;
             newemployee.Salary = employee.Salary;
             newemployee.Position = employee.Position;
+            newemployee.DepartmentName = employee.DepartmentName;
 
             foreach (Department item in Departments)
             {
-                if (item.Name.ToUpper() == DepartmentName.ToUpper()) //Adin duzgun yoxlanilmasi ucun ikisi de upper olunmalidir
+                while (item.Name.ToUpper() != DepartmentName.ToUpper()) //Adin duzgun yoxlanilmasi ucun ikisi de upper olunmalidir
                 {
-                    if (item.WorkerLimit > item.Employees.Count)
-                    {
-                           item.Employees.Add(newemployee);
-                        Console.WriteLine("Isci sirkete daxil edildi");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"{item.Name} adli departmentde isci doludur");
-                    }                   
+                    Console.WriteLine("Duzgun department adi daxil edin");
+                    Console.ReadLine();
+                }
+                if (item.WorkerLimit > item.Employees.Count)
+                {
+                    item.Employees.Add(newemployee);
+                    Console.WriteLine("Isci sirkete daxil edildi");
                 }
                 else
                 {
-                    Console.WriteLine("Duzgun department adi daxil edin...");
+                    Console.WriteLine($"{item.Name} adli departmentde isci doludur");
                 }
             }
         }
@@ -115,7 +114,7 @@ namespace Department_Console_Project_.Services
                     }
                     else
                     {
-                        Console.WriteLine("Daxil etdiyiniz adda isci yoxdur");
+                        Console.WriteLine("Daxil etdiyiniz nomreli isci yoxdur");
                         return;
                     }
                 }

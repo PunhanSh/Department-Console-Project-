@@ -20,17 +20,25 @@ namespace Department_Console_Project_
         {
             do
             {
-                Console.WriteLine("1.1(1) - Departmentlerin siyahisini gostermek\n~~~~~~~~~~");
-                Console.WriteLine("1.2(2) - Departament yaratmaq\n~~~~~~~~~~");
-                Console.WriteLine("1.3(3) - Departamentde deyisiklik etmek\n~~~~~~~~~~");
-                Console.WriteLine("2.1(4) - Iscilerin siyahisini gostermek\n~~~~~~~~~~");
-                Console.WriteLine("2.2(5) - Departmentdeki iscilerin siyahisini gostermek\n~~~~~~~~~~");
-                Console.WriteLine("2.3(6) - Isci elave etmek\n~~~~~~~~~~");
-                Console.WriteLine("2.4(7) - Isci uzerinde deyisiklik etmek\n~~~~~~~~~~");
-                Console.WriteLine("2.5(8) - Departamentden iscinin silinmesi\n~~~~~~~~~~");
+                Console.WriteLine("Secim edin:\n~~~~~~~~~~");
+                Console.WriteLine("1 - Departmentlerin siyahisini gostermek\n~~~~~~~~~~");
+                Console.WriteLine("2 - Departament yaratmaq\n~~~~~~~~~~");
+                Console.WriteLine("3 - Departamentde deyisiklik etmek\n~~~~~~~~~~");
+                Console.WriteLine("4 - Iscilerin siyahisini gostermek\n~~~~~~~~~~");
+                Console.WriteLine("5 - Departmentdeki iscilerin siyahisini gostermek\n~~~~~~~~~~");
+                Console.WriteLine("6 - Isci elave etmek\n~~~~~~~~~~");
+                Console.WriteLine("7 - Isci uzerinde deyisiklik etmek\n~~~~~~~~~~");
+                Console.WriteLine("8 - Departamentden iscinin silinmesi\n~~~~~~~~~~");
 
-                int choose1 = Convert.ToInt32(Console.ReadLine());
-                switch (choose1)
+                string choose1 = Console.ReadLine();
+                int choose2;
+                while (!int.TryParse(choose1, out choose2))
+                {
+                    Console.WriteLine("1-den 8-e qeder araliqda reqem secin");
+                    choose1 = Console.ReadLine();
+                    int.TryParse(choose1, out choose2);
+                }
+                switch (choose2)
                 {
                     case 1:
                         ShowDepartmenstList(humanResourceManager);
@@ -70,16 +78,9 @@ namespace Department_Console_Project_
         {
             foreach (Department item in humanResourceManager.Departments)
             {
-                if (item.Employees.Count > 0) //departmentde isci olmalidir
-                {
-                    Console.WriteLine($"Departamentin Adi: {item.Name}\nDepartamentdeki iscinin sayi: {item.Employees.Count}\nDepartamentin ortalama maasi: {item.CalcSalaryAverage()}");
-                }
-                else
-                {
-                    Console.WriteLine("Daxil etdiyiniz departmentde isci yoxdur");
-                }
-            }
-            humanResourceManager.GetDepartments();
+              Console.WriteLine($"Departamentin Adi: {item.Name}\nDepartamentdeki iscinin sayi: {item.Employees.Count}\nDepartamentin ortalama maasi: {item.CalcSalaryAverage()}\n~~~~~~~~~~");                
+            }        
+             humanResourceManager.GetDepartments();
         }
         #endregion
 
@@ -92,24 +93,29 @@ namespace Department_Console_Project_
             {
                 Console.WriteLine("Departmentin adini daxil edin...");
                 string DepartName = Console.ReadLine();
-                Console.WriteLine("Departmentin isci limitini daxil edin...");
+                    while (!(DepartName.Length >= 2))
+                    {
+                    Console.WriteLine("Department adinda en azi iki herf olmalidir");
+                    DepartName = Console.ReadLine();
+                    }
+                 Console.WriteLine("Departmentin isci limitini daxil edin...");
                 string limit1 = Console.ReadLine();
                 int workerlimit;
 
-                while (!int.TryParse(limit1, out workerlimit))
+                while (!int.TryParse(limit1, out workerlimit) || workerlimit <= 0)
                 {
-                    Console.WriteLine("Departamentin isci limiti deyerini duzgun daxil edin...");
+                    Console.WriteLine("Departamentin isci limiti deyerini duzgun daxil edin (ISCI LIMITI 1-DEN AZ OLA BILMEZ)");
                     limit1 = Console.ReadLine();
                     int.TryParse(limit1, out workerlimit);
                 }
-                Console.WriteLine("Departamentin maas limitini daxil edin...");
+                Console.WriteLine("Departamentin maas limitini daxil edin");
 
                 string limit2 = Console.ReadLine();
                 int salarylimit;
 
-                while (!int.TryParse(limit2, out salarylimit))
+                while (!int.TryParse(limit2, out salarylimit) || salarylimit < 250) 
                 {
-                    Console.WriteLine("Departamentin maas limiti deyerini duzgun daxil edin...");
+                    Console.WriteLine("Departamentin maas limiti deyerini duzgun daxil edin(MAAS LIMITI 250-DEN ASAGI OLA BILMEZ)");
                     limit2 = Console.ReadLine();
                     int.TryParse(limit2, out salarylimit);
                 }
@@ -118,7 +124,8 @@ namespace Department_Console_Project_
                 department.SalaryLimit = salarylimit;
 
                 humanResourceManager.AddDepartment(department);
-                Console.WriteLine("Department elave edildi.");
+                Console.WriteLine("Departament elave edildi.\n~~~~~~~~~~");
+                Console.WriteLine($"Departament Adi: {DepartName}\n~~~~~~~~~~\nDepartament Isci Limiti: {workerlimit}\n~~~~~~~~~~\nDepartament Maas Limiti: {salarylimit}\n~~~~~~~~~~\n");
                 check = true;
             }
         }
@@ -129,23 +136,29 @@ namespace Department_Console_Project_
         static void EditDepartment(HumanResourceManager humanResourceManager)
         {
             Console.WriteLine("Uzerinde deyisiklik etmek istediyiniz department adini daxil edin...");
-            string name = Console.ReadLine();
+            string name = Console.ReadLine();            
 
             Department department = humanResourceManager.Departments.Find(w => w.Name.ToUpper() == name.ToUpper());
             if (department == null)
             {
                 Console.WriteLine("Daxil etdiyiniz adda department yoxdur...");
-                return;
+                Menu(humanResourceManager);
             }
 
-            Console.WriteLine($"Departamentin adi: {department.Name}\nDepartamentin isci limiti: {department.WorkerLimit}\nDepartamentin maas limiti: {department.SalaryLimit}");
+            Console.WriteLine($"Departamentin adi: {department.Name}\nDepartamentin isci limiti: {department.WorkerLimit}\nDepartamentin maas limiti: {department.SalaryLimit}\n~~~~~~~~~~");
             Console.WriteLine("Departamentin yeni adini daxil edin:");
             string newname = Console.ReadLine();
+            while (!(newname.Length >= 2))
+            {
+                Console.WriteLine("Department adinda en azi iki herf olmalidir");
+                newname = Console.ReadLine();
+            }
+
             Console.WriteLine("Departamentin yeni isci limitini daxil edin:");
             string newworkerlimit = Console.ReadLine();
             int newworkerlimit1;
 
-            while (!int.TryParse(newworkerlimit, out newworkerlimit1))
+            while (!int.TryParse(newworkerlimit, out newworkerlimit1) || newworkerlimit1 <= 0)
             {
                 Console.WriteLine("Duzgun isci limiti deyeri daxil edin:");
                 newworkerlimit = Console.ReadLine();
@@ -156,17 +169,25 @@ namespace Department_Console_Project_
             string newsalarylimit = Console.ReadLine();
             int newsalarylimit1;
 
-            while (!int.TryParse(newsalarylimit, out newsalarylimit1))
+            while (!int.TryParse(newsalarylimit, out newsalarylimit1) || newsalarylimit1 < 250)
             {
                 Console.WriteLine("Duzgun maas limiti deyeri daxil edin:");
                 newsalarylimit = Console.ReadLine();
                 int.TryParse(newsalarylimit, out newsalarylimit1);
             }
-            department.Name = newname;
-            department.WorkerLimit = newworkerlimit1;
-            department.SalaryLimit = newsalarylimit1;
+            if (department.Name == newname && department.WorkerLimit == newworkerlimit1 && department.SalaryLimit == newsalarylimit1)
+            {
+                Console.WriteLine("Hec bir deyisiklik edilmedi.\n~~~~~~~~~~");
+            }
+            else
+            {
+                department.Name = newname;
+                department.WorkerLimit = newworkerlimit1;
+                department.SalaryLimit = newsalarylimit1;
 
-            Console.WriteLine("Department parametrleri deyisdirildi.");
+                Console.WriteLine("Department parametrleri deyisdirildi.\n~~~~~~~~~~");
+            }
+            Console.WriteLine($"Departament Adi: { newname}\n~~~~~~~~~~\nDepartament Isci Limiti: { newworkerlimit1}\n~~~~~~~~~~\nDepartament Maas Limiti: { newsalarylimit1}\n~~~~~~~~~~\n");
         }
         #endregion
 
@@ -199,9 +220,16 @@ namespace Department_Console_Project_
             }
             else
             {
-                for (int i = 0; i < departmentslist.Employees.Count; i++)
+                if (departmentslist.Employees.Count != 0)
                 {
-                    Console.WriteLine($"Isci nomresi: {departmentslist.Employees[i].No}\nIscinin adi ve soyadi: {departmentslist.Employees[i].Fullname}\nIscinin vezifesi: {departmentslist.Employees[i].Position}\nIscinin maasi: {departmentslist.Employees[i].Salary}");
+                    for (int i = 0; i < departmentslist.Employees.Count; i++)
+                    {
+                        Console.WriteLine($"Isci nomresi: {departmentslist.Employees[i].No}\nIscinin adi ve soyadi: {departmentslist.Employees[i].Fullname}\nIscinin vezifesi: {departmentslist.Employees[i].Position}\nIscinin maasi: {departmentslist.Employees[i].Salary}");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"{departmentname} departamentinde isci yoxdur");
                 }
             }
         }
@@ -212,7 +240,7 @@ namespace Department_Console_Project_
         {
             Console.WriteLine("Iscinin nomresini daxil edin");
             string no = Console.ReadLine();
-
+                       
             Console.WriteLine("Iscinin adi ve soyadini daxil edin");
             string fullname = Console.ReadLine();
 
@@ -222,17 +250,24 @@ namespace Department_Console_Project_
             Console.WriteLine("Iscinin maasini daxil edin");
             string salary = Console.ReadLine();
             int newsalary;
-            while (!int.TryParse(salary, out newsalary))
+            while (!int.TryParse(salary, out newsalary) || newsalary < 250)
             {
-                Console.WriteLine("Maawi daxil edin!!");
+                Console.WriteLine("Maasi duzgun daxil edin");
                 salary = Console.ReadLine();
                 int.TryParse(salary, out newsalary);
             }
 
             Console.WriteLine("Iscinin department adini daxil edin");
             string DepartmentName = Console.ReadLine();
-            Employee newemployee = new Employee();
+            
 
+            Department department = humanResourceManager.Departments.Find(w => w.Name.ToUpper() == DepartmentName.ToUpper());
+            if (department == null)
+            {
+                Console.WriteLine("Daxil etdiyiniz adda department yoxdur...");
+                Menu(humanResourceManager);
+            }
+            Employee newemployee = new Employee();
             newemployee.No = no;
             newemployee.Fullname = fullname;
             newemployee.Salary = newsalary;
@@ -259,7 +294,6 @@ namespace Department_Console_Project_
             {
                 for (int j = 0; j < humanResourceManager.Departments[i].Employees.Count; j++)
                 {
-
                     if (employeeno == humanResourceManager.Departments[i].Employees[j].No)
                     {
                         check = true;
@@ -272,7 +306,10 @@ namespace Department_Console_Project_
                             x = i;
                             y = j;
                         }
-                        break;
+                        else
+                        {
+                            Menu(humanResourceManager);
+                        }
                     }
                 }
             }
@@ -284,7 +321,7 @@ namespace Department_Console_Project_
                 int salary2;
                 while (!int.TryParse(salary1, out salary2))
                 {
-                    Console.WriteLine("Maasi duzgun daxil edin");
+                    Console.WriteLine("Maasi DUZGUN daxil edin");
                     salary1 = Console.ReadLine();
                     int.TryParse(salary1, out salary2);
                 }

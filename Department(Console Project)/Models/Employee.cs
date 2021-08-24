@@ -45,6 +45,7 @@ namespace Department_Console_Project_.Models
                 else
                 {
                     Console.WriteLine("Isci vezifesi minimum 2 herfden ibaret olmalidir");
+                    return;
                 }
             }
         }
@@ -94,7 +95,7 @@ namespace Department_Console_Project_.Models
         #endregion
 
         #region DepartmentName (iscinin elave olundugu department adi)
-        public string DepartmentName;
+        public string DepartmentName { get; set; }
         #endregion
         public override string ToString()//Override tostring methodu
         {
